@@ -224,3 +224,57 @@ CALL proc_deletar_id(13);
 CALL proc_deletar_id(12);
 CALL proc_deletar_id(11);
 CALL proc_deletar_id(10);
+
+CREATE OR REPLACE FUNCTION porcentagem_aumento_salario(numeric) RETURNS numeric AS
+$$
+DECLARE
+	salario numeric;
+	conversao numeric;
+BEGIN
+	conversao := $1/100.0 + 1.0;
+	salario := 1000.;
+	salario := (salario) * conversao;
+	RETURN ROUND(salario,2);
+END;
+$$
+language plpgsql;
+
+
+select porcentagem_aumento_salario(56);
+
+-------------------------------------------------
+
+CREATE OR REPLACE FUNCTION porcentagem_desconto_salario(numeric) RETURNS numeric AS
+$$
+DECLARE
+	salario numeric;
+	conversao numeric;
+BEGIN
+	salario := 1000.;
+	salario := salario - (salario * $1/100.0);
+	RETURN ROUND(salario,2);
+END;
+$$
+language plpgsql;
+
+
+select porcentagem_desconto_salario(56);
+
+-------------------------------------------------
+
+CREATE OR REPLACE FUNCTION compara_valor(numero numeric) RETURNS boolean AS
+$$
+DECLARE
+	valor BIGINT := 2;
+BEGIN
+	IF (numero > valor) THEN
+		RETURN TRUE; 
+	ELSE
+		RETURN FALSE;
+	END IF;
+END;
+$$
+language plpgsql;
+
+
+select compara_valor(2);
