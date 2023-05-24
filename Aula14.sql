@@ -139,4 +139,14 @@ LANGUAGE plpgsql;
 
 select imprime_hospedagens();
 
-select id_cliente,id_quarto from reservas
+
+select cpf.nome,tq.descricao from clientes_pfs cpf
+INNER JOIN reservas r
+ON cpf.id = r.id
+INNER JOIN quartos q
+ON r.id_quarto = q.id
+INNER JOIN tipos_quartos tq
+ON q.id_tipo = tq.id
+
+select * FROM reservas;
+
